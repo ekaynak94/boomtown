@@ -62,39 +62,39 @@ module.exports = app => {
       }
     },
     User: { 
-      async items(parent, args, { pgResource }) {
+      async items({id}, args, { pgResource }) {
         try {
-          return await pgResource.getItemsForUser(parent.id);
+          return await pgResource.getItemsForUser(id);
         } catch (e) {
           throw new ApolloError(e);
         }
-      }, async borrowed(parent, args, { pgResource }) {
+      }, async borrowed({id}, args, { pgResource }) {
         try {
-          return await pgResource.getBorrowedItemsForUser(parent.id);
+          return await pgResource.getBorrowedItemsForUser(id);
         } catch (e) {
           throw new ApolloError(e);
         }
       }
     },
     Item: {
-      async itemowner(parent, args, { pgResource }) {
+      async itemowner({ownerid}, args, { pgResource }) {
         try {
-          return await pgResource.getUserById(parent.ownerid);
+          return await pgResource.getUserById(ownerid);
         } catch (e) {
           throw new ApolloError(e);
         }
       },
-      async tags(parent, args, { pgResource }) {
+      async tags({id}, args, { pgResource }) {
         try {
-          console.log(parent);
-          return await pgResource.getTagsForItem(parent.id);
+          
+          return await pgResource.getTagsForItem(id);
         } catch (e) {
           throw new ApolloError(e);
         }
       },
-      async borrower(parent, args, { pgResource }) {
+      async borrower({ borrowerid}, args, { pgResource }) {
         try {
-          return await pgResource.getUserById(parent.borrowerid);
+          return await pgResource.getUserById(borrowerid);
         } catch (e) {
           throw new ApolloError(e);
         }
