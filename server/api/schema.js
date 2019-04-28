@@ -1,13 +1,5 @@
 const { gql } = require('apollo-server-express');
 
-/**
- *  @TODO: Boomtown Schema
- *
-
-type Mutation {
-    addItem(item:NewItemInput!,image:Upload): Item
-  }
-*/
 module.exports = gql`
   scalar date
   
@@ -67,6 +59,6 @@ module.exports = gql`
   }
 
   type Mutation {
-    addItem: Boolean
+    addItem(item:NewItemInput!): Item
   }
 `;
