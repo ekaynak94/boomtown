@@ -13,7 +13,6 @@ class ItemsContainer extends Component {
                 {({ loading, error, data }) => {
                     if (loading) return <p>Loading</p>;
                     if (error) return <p>{`Error! ${error.message}`}</p>;
-                    if(data)console.log(data)
                     return <Items classes={this.props.classes} items={data.items} />;
                 }}
             </Query>
