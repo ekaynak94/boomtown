@@ -63,6 +63,7 @@ import './index.css';
 const App = () => {
   return (
     <MuiThemeProvider theme={theme}>
+      <CssBaseline/>
       <ApolloProvider client={client}> 
         <BrowserRouter>
           <Layout/>
