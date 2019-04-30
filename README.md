@@ -12,18 +12,28 @@ Web based application for local item sharing. Users can upload items that they a
 * Final-Form
 * Material-UI
 * Gravatar
+* Express
 * GraphQL
 * Apollo Client
-* Postgres
+* PostgreSQL
 * Postico
 
 ## Server
 
 ### Setup
 
+* Run installation command, 'npm install' in server directory.
+* Activate server by running it on PostgreSQL app.
+* Run the command 'npm run start'.
+
 ### How to Use
 
 ![Graphql Playground](./screenshots/screenshot-1.png)
+
+* Once the setup is complete, you enter the url stated in your terminal as 'express running: url' to your browser and access the GraphQL playground.
+
+* Here you can enter queries as seen in the screen shot above and see what the database returns with the implemented schema and resolvers.
+
 
 ### Usable Commands
 
