@@ -3,15 +3,23 @@ import Share from './Share';
 import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
 // import FullScreenLoader from '../../components/FullScreenLoader';
-// import { Query } from 'react-apollo';
-// import { } from '../../apollo/queries';
+import { Query } from 'react-apollo';
+import { ALL_TAGS_QUERY} from '../../apollo/queries';
 
 class ShareContainer extends Component {
   render() {
     return (
-      <Share />
+      <Query query={ALL_TAGS_QUERY}>
+        {({ loading, error, data }) => {
+          if (loading) return <p>Loading...</p>;
+          if (error) return <p>{`Error! ${error.message}`}</p>;
+          if(data) return <Share tags={data.tags}/>;
+        }}
+      </Query>
     );
   }
 }
+
+
 
 export default withStyles(styles)(ShareContainer);
