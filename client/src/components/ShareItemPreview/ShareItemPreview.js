@@ -1,15 +1,11 @@
-import React, { Component } from 'react';
-import ItemCard from '../ItemCard'
+import React from 'react';
+import ItemCard from '../ItemCard';
+import { connect } from 'react-redux';
 
-class SharePreview extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
+const ShareItemPreview = ({shareItemPreview}) => {
+  return <ItemCard item={shareItemPreview} />;
   }
 
-  render() {
-    return <ItemCard />;
-  }
-}
+const mapStateToProps=({shareItemPreview})=>({shareItemPreview})
 
-export default SharePreview;
+export default connect(mapStateToProps)(ShareItemPreview);
