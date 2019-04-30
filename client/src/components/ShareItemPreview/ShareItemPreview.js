@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ItemCard from '../ItemCard'
 
 class SharePreview extends Component {
   constructor(props) {
@@ -7,11 +8,7 @@ class SharePreview extends Component {
   }
 
   render() {
-    return (
-      <div>
-        <p>This is the share Preview.</p>
-      </div>
-    );
+    return <ItemCard />;
   }
 }
 
