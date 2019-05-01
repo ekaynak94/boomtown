@@ -11,6 +11,9 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { updateItem, resetItem, resetImage } from '../../redux/ShareItemPreview/reducer';
 import { connect } from 'react-redux';
 
+import { Mutation } from "react-apollo";
+import { ADD_ITEM_MUTATION} from '../../apollo/queries';
+
 
 const Input =({ value, placeholder, onChange, meta })=> {
   return (
@@ -37,83 +40,6 @@ const FormConfig = {
     description: 'Describe your item',
   }
 };
-
-const FormView = ({generateTagsText, handleSelectTag,selectedTags,updateItem, dispatchUpdate, fileInput, tags, handleSubmit, pristine, invalid, form }) => {
-  return (
-    <form onSubmit={handleSubmit}>
-      <FormSpy
-        subscription={{ values: true }}
-        component={({ values }) => {
-          if (values) {
-            dispatchUpdate(values, tags, updateItem);
-          }
-          return '';
-        }}
-      />
-      <input
-        hidden
-        ref={fileInput}
-        accept="image/*"
-        id="contained-button-file"
-        multiple
-        type="file"
-      />
-      <label htmlFor="contained-button-file">
-        <Button variant="contained" component="span">
-          Upload
-        </Button>
-      </label>
-      <Field name="title"
-        render={({ input, meta }) => (
-          <Input
-            placeholder={FormConfig.placeholder[input.name]}
-            onChange={input.onChange}
-            meta={meta}
-            value={input.value} />
-        )} />
-
-      <Field name="description"
-        render={({ input, meta }) => (
-          <Input
-            placeholder={FormConfig.placeholder[input.name]}
-            onChange={input.onChange}
-            meta={meta}
-            value={input.value}/>
-        )} />
-      <Field name="tags">
-        {({ input, meta }) => {
-          return (
-            <Select
-              multiple
-              value={selectedTags}
-              onChange={e => handleSelectTag(e)}
-              renderValue={selected => {
-                return generateTagsText(tags, selected);
-              }}
-            >
-              {tags &&
-                tags.map(tag => (
-                  <MenuItem key={tag.id} value={tag.id}>
-                    <Checkbox
-                      checked={
-                        selectedTags.indexOf(
-                          tag.id,
-                        ) > -1
-                      }
-                    />
-                    <ListItemText primary={tag.title} />
-                  </MenuItem>
-                ))}
-            </Select>
-          );
-        }}
-      </Field>
-      <Button size="small" color="primary">
-        Share
-      </Button>
-    </form>
-  );
-}
 
 class ShareForm extends Component {
   constructor(props) {
@@ -169,7 +95,7 @@ class ShareForm extends Component {
     });
   }
 
-  generateTagsText(tags, selected) {
+  generateTagsText=(tags, selected)=> {
     return tags
       .map(t => (selected.indexOf(t.id) > -1 ? t.title : false))
       .filter(e => e)
@@ -190,22 +116,102 @@ class ShareForm extends Component {
     });
   }
 
+  saveItem = (values, tags, addItem) => {
+    const newTags = tags
+      .filter(tag =>
+      this.state.selectedTags.indexOf(tag.id)>=0)
+      .map(tag => ({ id: tag.id, title: tag.title }))
+    const item = { ...values, tags: [...newTags] };
+    addItem({variables:{item}})
+  }
+
   render() {
     const { tags } = this.props;
     return (
-      <div>
-        <Form
-          onSubmit={(values)=>this.saveItem(values,tags)}
-          render={props => (<FormView
-            updateItem={this.props.updateItem}
-            dispatchUpdate={this.dispatchUpdate}
-            fileInput={this.fileInput}
-            handleSelectTag={this.handleSelectTag}
-            selectedTags={this.state.selectedTags}
-            generateTagsText={this.generateTagsText}
-            tags={tags} {...props} />)}
-        />
-      </div>
+      <Mutation mutation={ADD_ITEM_MUTATION}>
+        {(addItem) => (
+          <div>
+            <Form
+              onSubmit={(values) => this.saveItem(values, tags, addItem)}
+              render={({ handleSubmit, pristine, invalid, form})=> (
+                <form onSubmit={handleSubmit}>
+                  <FormSpy
+                    subscription={{ values: true }}
+                    component={({ values }) => {
+                      if (values) {
+                        this.dispatchUpdate(values, tags, this.props.updateItem);
+                      }
+                      return '';
+                    }}
+                  />
+                  <input
+                    hidden
+                    ref={this.fileInput}
+                    accept="image/*"
+                    id="contained-button-file"
+                    multiple
+                    type="file"
+                  />
+                  <label htmlFor="contained-button-file">
+                    <Button variant="contained" component="span">
+                      Upload
+                    </Button>
+                  </label>
+                  <Field name="title"
+                    render={({ input, meta }) => (
+                      <Input
+                        placeholder={FormConfig.placeholder[input.name]}
+                        onChange={input.onChange}
+                        meta={meta}
+                        value={input.value} />
+                    )} />
+
+                  <Field name="description"
+                    render={({ input, meta }) => (
+                      <Input
+                        placeholder={FormConfig.placeholder[input.name]}
+                        onChange={input.onChange}
+                        meta={meta}
+                        value={input.value} />
+                    )} />
+                  <Field name="tags">
+                    {({ input, meta }) => {
+                      return (
+                        <Select
+                          multiple
+                          value={this.state.selectedTags}
+                          onChange={e => this.handleSelectTag(e)}
+                          renderValue={selected => {
+                            return this.generateTagsText(tags, selected);
+                          }}
+                        >
+                          {tags &&
+                            tags.map(tag => (
+                              <MenuItem key={tag.id} value={tag.id}>
+                                <Checkbox
+                                  checked={
+                                    this.state.selectedTags.indexOf(
+                                      tag.id,
+                                    ) > -1
+                                  }
+                                />
+                                <ListItemText primary={tag.title} />
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      );
+                    }}
+                  </Field>
+                  <Button type="submit" size="small" color="primary">
+                    Share
+                  </Button>
+                </form>
+              )}
+            />
+          </div>
+        )}
+        
+      </Mutation>
     );
   }
 }
