@@ -7,48 +7,14 @@ const path = require('path');
 module.exports = (app) => {
   const PORT = process.env.PORT || 8080;
 
-  /**
-   *  @TODO: Configuration Variables
-   *
-   *  As much as possible, configuration information should be defined in a single location, this file.
-   *
-   *  Server applications often need information about their external environment,
-   *  such as the url and credentials of an external database, in order to run.
-   *
-   *  In Express, the 'app' object is a singleton, and we can use the .set method to store
-   *  information on the app object, and use it elsewhere.
-   *
-   *  The main reason for storing configuration information, such as database credentials, in the application's
-   *  'environment' instead of the source code is security. We can use the node global 'process.env' to retrieve
-   *  values from our application's environment. We should also provide a fallback / default.
-   *
-   *  Most server applications will not run unless specific values are part of their environment.
-   *  Boomtown requires the following environment variables:
-   *
-   *  PORT
-   *  PG_HOST
-   *  PG_USER
-   *  PG_PASSWORD
-   *  PG_DB
-   *  JWT_SECRET
-   *
-   *  And the following non-security related information should also be set for use elsewhere:
-   *
-   *  JWT_COOKIE_NAME
-   *  CORS_CONFIG (already set for you below)
-   *
-   *  Use the app.set and process.env to retrieve environment variables, and provide a fallback
-   *  if any are not defined.
-   *
-   *  Use Express' app.set() to store additional configuration information.
-   *
-   *  For example: app.set('PG_HOST', process.env.PG_HOST || 'localhost')
-   */
   app.set('PORT', PORT);
   app.set('PG_HOST', process.env.PG_HOST || 'localhost');
   app.set('PG_USER', process.env.PG_USER || 'boomtown');
   app.set('PG_PASSWORD', process.env.PG_PASSWORD || 'boomtown');
   app.set('PG_DB', process.env.PG_DB || 'boomtown');
+  
+  app.set('JWT_SECRET', process.env.JWT_SECRET || 'keyboardcat');
+  app.set('JWT_COOKIE_NAME', 'bt-token');
   app.use(cookieParser());
 
   if (process.env.NODE_ENV === 'production') {
