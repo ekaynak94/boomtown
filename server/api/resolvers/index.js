@@ -106,13 +106,11 @@ module.exports = app => {
   
 
       async addItem(parent, {item}, {pgResource,token}, info) {
-     
         try {
           //const user = await jwt.decode(token, app.get('JWT_SECRET'));
           const newItem = await pgResource.saveNewItem({
             item: item,
-            // image: image,
-            // user
+            user:token.id
           });
         return newItem;
         } catch (e) {
