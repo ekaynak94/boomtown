@@ -116,7 +116,8 @@ class AccountForm extends Component {
                     onClick={() => {
                       form.reset();
                       this.setState({
-                        formToggle: !this.state.formToggle
+                        formToggle: !this.state.formToggle,
+                        error:null
                       });
                     }}
                   >
