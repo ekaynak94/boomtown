@@ -25,7 +25,7 @@ const ItemCard = ({ classes, item = {
         <Card className={classes.card}>
             <CardMedia
                 className={classes.cardMedia}
-                src={item.imageurl}
+                image={item.imageurl}
                 title="Image for item"
             />
             <CardHeader
@@ -47,7 +47,7 @@ const ItemCard = ({ classes, item = {
                 </Typography>
             </CardContent>
             <CardActions>
-                <Button size="small" color="primary">
+                <Button className={classes.button} size="small">
                     Borrow
                 </Button>
             </CardActions>
