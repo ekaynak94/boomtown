@@ -1,34 +1,20 @@
-/**
- *  @TODO: Handling Server Errors
- *
- *  Once you've completed your pg-resource.js methods and handled errors
- *  use the ApolloError constructor to capture and return errors from your resolvers.
- *
- *  Throwing ApolloErrors from your resolvers is a nice pattern to follow and
- *  will help you easily debug problems in your resolving functions.
- *
- *  It will also help you control th error output of your resource methods and use error
- *  messages on the client! (More on that later).
- *
- *  The user resolver has been completed as an example of what you'll need to do.
- *  Finish of the rest of the resolvers when you're ready.
- */
 const { ApolloError } = require('apollo-server-express');
-
-// @TODO: Uncomment these lines later when we add auth
-// const jwt = require("jsonwebtoken")
-
+const jwt = require("jsonwebtoken");
 const authMutations = require("./auth");
 const { DateScalar } = require('../custom-types');
 
 module.exports = app => {
   return {
     
-    //Date: DateScalar,
+    Date: DateScalar,
     Query: {
-      viewer( parent, args, {token}, info) {
-        if (token) return token;
-        return null;
+      async viewer(parent, args, { token }, info) {
+        try {
+          const viewer = token ? jwt.verify(token, app.get("JWT_SECRET")) : null;
+          return viewer;
+        } catch (e) {
+          throw new ApolloError(e);
+        }
       }, async user(parent, { id }, { pgResource }, info) {
         try {
           const user = await pgResource.getUserById(id);
@@ -95,10 +81,13 @@ module.exports = app => {
 
       async addItem(parent, {item}, {pgResource,token}, info) {
         try {
-          //const user = await jwt.decode(token, app.get('JWT_SECRET'));
+          const user = token
+            ? jwt.verify(token, app.get("JWT_SECRET"))
+            : undefined;
+          console.log(user);
           const newItem = await pgResource.saveNewItem({
             item: item,
-            user:token.id
+            user:user?user.id:''
           });
         return newItem;
         } catch (e) {
