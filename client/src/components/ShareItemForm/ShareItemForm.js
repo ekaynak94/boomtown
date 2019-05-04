@@ -144,19 +144,27 @@ class ShareForm extends Component {
                       return '';
                     }}
                   />
-                  <input
-                    hidden
-                    ref={this.fileInput}
-                    accept="image/*"
-                    id="contained-button-file"
-                    multiple
-                    type="file"
-                  />
-                  <label htmlFor="contained-button-file">
-                    <Button variant="contained" component="span">
-                      Upload
-                    </Button>
-                  </label>
+                  <Field name="imageurl"
+                    render={({ input, meta }) => (
+                        <div>
+                          <input
+                            hidden
+                            ref={this.fileInput}
+                            accept="image/*"
+                            id="contained-button-file"
+                            onChange={e => this.handleSelectFile(e)}
+                            type="file"
+                          />
+                          <label htmlFor="contained-button-file">
+                          <Button
+                            variant="contained"
+                            component="span"
+                            >
+                              Select an Image
+                            </Button>
+                        </label>
+                      </div>
+                    )} />
                   <Field name="title"
                     render={({ input, meta }) => (
                       <Input
