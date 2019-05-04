@@ -84,7 +84,6 @@ module.exports = app => {
           const user = token
             ? jwt.verify(token, app.get("JWT_SECRET"))
             : undefined;
-          console.log(user);
           const newItem = await pgResource.saveNewItem({
             item: item,
             user:user?user.id:''
