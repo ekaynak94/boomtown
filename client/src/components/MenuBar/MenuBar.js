@@ -13,7 +13,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import { NavLink } from 'react-router-dom';
-
+import { LOGOUT_MUTATION } from '../../apollo/queries';
+import { Mutation } from "react-apollo";
 
 class MenuBar extends React.Component {
     constructor(props) {
@@ -32,53 +33,62 @@ class MenuBar extends React.Component {
     handleClose = () => {
         this.setState({ anchorEl: null });
     };
+
+    logOut = (logout) => {
+        window.location.reload();
+        logout();
+    };
   
     render() {
         const { match } = this.props;
         const { anchorEl } = this.state;
         return (
-            <AppBar position="fixed" color="primary" className={this.state.classes.appBar}>
-                <Toolbar className={this.state.classes.toolbar}>
-                <NavLink to='/*'>
-                  <IconButton className={this.state.classes.logo} color="inherit">  
-                  </IconButton>
-                </NavLink>
-                <div>
-                    {match.url!=='/share'?
-                    <NavLink to='/share'>
-                        <Button className={this.state.classes.addMore} color="inherit">
-                            <AddIcon color='secondary'/>
-                            <Typography >Share Something</Typography>       
-                        </Button>
-                    </NavLink>:null
-                    }       
-                    <IconButton
-                        aria-owns={anchorEl ? 'nav-menu' : undefined}
-                        aria-haspopup="true"
-                        onClick={this.handleClick}
-                        color="inherit">
-                            <MoreIcon />
-                    </IconButton>
-                    <Menu
-                        id="nav-menu"
-                        anchorEl={anchorEl}
-                        open={Boolean(anchorEl)}
-                        onClose={this.handleClose}
-                    >
-                        <MenuItem onClick={this.handleClose}>
-                            <NavLink to='/profile'>
-                                Your Profile
-                            </NavLink>
-                        </MenuItem>
-                        <MenuItem onClick={this.handleClose}>
+            <Mutation mutation={LOGOUT_MUTATION}>
+                {(logout) => (
+                    <AppBar position="fixed" color="primary" className={this.state.classes.appBar}>
+                        <Toolbar className={this.state.classes.toolbar}>
                             <NavLink to='/*'>
-                                Sign-Out
+                                <IconButton className={this.state.classes.logo} color="inherit">
+                                </IconButton>
                             </NavLink>
-                        </MenuItem>
-                    </Menu>
-                </div>
-              </Toolbar>
-            </AppBar>
+                            <div>
+                                {match.url !== '/share' ?
+                                    <NavLink to='/share'>
+                                        <Button className={this.state.classes.addMore} color="inherit">
+                                            <AddIcon color='secondary' />
+                                            <Typography >Share Something</Typography>
+                                        </Button>
+                                    </NavLink> : null
+                                }
+                                <IconButton
+                                    aria-owns={anchorEl ? 'nav-menu' : undefined}
+                                    aria-haspopup="true"
+                                    onClick={this.handleClick}
+                                    color="inherit">
+                                    <MoreIcon />
+                                </IconButton>
+                                <Menu
+                                    id="nav-menu"
+                                    anchorEl={anchorEl}
+                                    open={Boolean(anchorEl)}
+                                    onClose={this.handleClose}
+                                >
+                                    <MenuItem onClick={this.handleClose}>
+                                        <NavLink to='/profile'>
+                                            Your Profile
+                                        </NavLink>
+                                    </MenuItem>
+                                    <MenuItem onClick={()=>this.logOut(logout)}>
+                                        <NavLink to='/*'>
+                                            Sign-Out
+                                        </NavLink>
+                                    </MenuItem>
+                                </Menu>
+                            </div>
+                        </Toolbar>
+                    </AppBar>
+                )}
+                </Mutation>
         );
       }
 }
