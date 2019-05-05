@@ -5,6 +5,7 @@ import Home from '../pages/Home';
 import Items from '../pages/Items';
 import Profile from '../pages/Profile';
 import Share from '../pages/Share';
+import MenuBar from '../components/MenuBar'
 
 export default () => (
   <Fragment>
@@ -13,13 +14,16 @@ export default () => (
         if (loading) return <p>Loading...</p>;
         if(viewer){
           return(
-            /* @TODO: Add your menu component here */
+            <div>
+            <MenuBar/>
             <Switch>
               <Route path="/items" component={Items} />
               <Route path="/share" component={Share} />
               <Route path="/profile/:id" component={Profile} />
               <Redirect from="/*" to="/items" />
             </Switch>
+            </div>
+            
           );
         } else {
           return (
