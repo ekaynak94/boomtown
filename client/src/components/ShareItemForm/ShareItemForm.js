@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
+import styles from './styles';
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
 import FormHelperText from '@material-ui/core/FormHelperText';
 import Button from '@material-ui/core/Button';
@@ -133,6 +136,9 @@ class ShareForm extends Component {
       <Mutation mutation={ADD_ITEM_MUTATION}>
         {(addItem) => (
           <div>
+            <Typography variant="headline" component="h1">
+              Share. Borrow. Prosper.
+            </Typography>
             <Form
               onSubmit={(values) => this.saveItem(values, tags, addItem)}
               render={({ handleSubmit, pristine, invalid, form})=> (
@@ -239,4 +245,4 @@ const mapDispatchToProps = (dispatch) => ({
   
 });
 
-export default connect(null,mapDispatchToProps)(ShareForm);
+export default withStyles(styles)(connect(null,mapDispatchToProps)(ShareForm));
