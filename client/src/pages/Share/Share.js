@@ -8,9 +8,9 @@ const Share = ({ classes, tags }) => (
   <ViewerContext.Consumer>
     {({ viewer, loading }) => {
         return (
-          <div>
-            <ShareItemPreview user={viewer}/>
-            <ShareItemForm tags={tags} />
+          <div className={classes.Grid}>
+            <ShareItemPreview className={classes.GridItem} user={viewer}/>
+            <ShareItemForm className={classes.GridItem} tags={tags} />
           </div>
         );
       }
