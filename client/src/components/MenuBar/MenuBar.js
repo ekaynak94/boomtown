@@ -9,33 +9,78 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
 import { NavLink } from 'react-router-dom';
 
-const MenuBar = ({ classes, match }) => {
-  return (
-      <AppBar position="fixed" color="primary" className={classes.appBar}>
-          <Toolbar className={classes.toolbar}>
-          <NavLink to='/*'>
-            <IconButton className={classes.logo} color="inherit">  
-            </IconButton>
-          </NavLink>
-          <div>
-            {match.url!=='/share'?
-            <NavLink to='/share'>
-                <Button className={classes.addMore} color="inherit">
-                    <AddIcon color='secondary'/>
-                    <Typography >Share Something</Typography>       
-                </Button>
-            </NavLink>:null
-            }       
-            <IconButton color="inherit">
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-      </AppBar>
-  );
+
+class MenuBar extends React.Component {
+    constructor(props) {
+        super(props);
+        const { classes, match } = props;
+        this.state = {
+            classes,
+            anchorEl: null,
+        };
+    }
+    
+    handleClick = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+  
+    handleClose = () => {
+        this.setState({ anchorEl: null });
+    };
+  
+    render() {
+        const { match } = this.props;
+        const { anchorEl } = this.state;
+        return (
+            <AppBar position="fixed" color="primary" className={this.state.classes.appBar}>
+                <Toolbar className={this.state.classes.toolbar}>
+                <NavLink to='/*'>
+                  <IconButton className={this.state.classes.logo} color="inherit">  
+                  </IconButton>
+                </NavLink>
+                <div>
+                    {match.url!=='/share'?
+                    <NavLink to='/share'>
+                        <Button className={this.state.classes.addMore} color="inherit">
+                            <AddIcon color='secondary'/>
+                            <Typography >Share Something</Typography>       
+                        </Button>
+                    </NavLink>:null
+                    }       
+                    <IconButton
+                        aria-owns={anchorEl ? 'nav-menu' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.handleClick}
+                        color="inherit">
+                            <MoreIcon />
+                    </IconButton>
+                    <Menu
+                        id="nav-menu"
+                        anchorEl={anchorEl}
+                        open={Boolean(anchorEl)}
+                        onClose={this.handleClose}
+                    >
+                        <MenuItem onClick={this.handleClose}>
+                            <NavLink to='/profile'>
+                                Your Profile
+                            </NavLink>
+                        </MenuItem>
+                        <MenuItem onClick={this.handleClose}>
+                            <NavLink to='/*'>
+                                Sign-Out
+                            </NavLink>
+                        </MenuItem>
+                    </Menu>
+                </div>
+              </Toolbar>
+            </AppBar>
+        );
+      }
 }
 
 MenuBar.propTypes = {
