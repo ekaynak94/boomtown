@@ -19,11 +19,12 @@ import { Mutation } from "react-apollo";
 import { ADD_ITEM_MUTATION} from '../../apollo/queries';
 
 
-const Input =({ value, placeholder, onChange, meta })=> {
+const Input =({ className,value, placeholder, onChange, meta })=> {
   return (
     <div className="line">
       <div>
         <TextField
+          className={className.textField}
           placeholder={placeholder}
           value={value}
           error={meta.touched && meta.error}
@@ -50,6 +51,7 @@ class ShareForm extends Component {
   constructor(props) {
     super(props);
     this.fileInput = React.createRef();
+    this.classes = props.classes;
     this.state = {
       fileSelected: false,
       done: false,
@@ -135,8 +137,8 @@ class ShareForm extends Component {
     return (
       <Mutation mutation={ADD_ITEM_MUTATION}>
         {(addItem) => (
-          <div>
-            <Typography variant="headline" component="h1">
+          <div className={this.classes.form}>
+            <Typography variant="headline" component="h1" className={this.classes.headline}>
               Share. Borrow. Prosper.
             </Typography>
             <Form
@@ -165,6 +167,7 @@ class ShareForm extends Component {
                           />
                           <label htmlFor="contained-button-file">
                           <Button
+                            className={this.classes.imagebtn}
                             variant="contained"
                             component="span"
                             >
@@ -176,6 +179,7 @@ class ShareForm extends Component {
                   <Field name="title"
                     render={({ input, meta }) => (
                       <Input
+                      className={this.classes}
                         placeholder={FormConfig.placeholder[input.name]}
                         onChange={input.onChange}
                         meta={meta}
@@ -185,6 +189,7 @@ class ShareForm extends Component {
                   <Field name="description"
                     render={({ input, meta }) => (
                       <Input
+                        className={this.classes}
                         placeholder={FormConfig.placeholder[input.name]}
                         onChange={input.onChange}
                         meta={meta}
@@ -193,9 +198,10 @@ class ShareForm extends Component {
                   <Field name="tags">
                     {({ input, meta }) => {
                       return (
-                        <FormControl>
-                          <InputLabel htmlFor="tag-select">{FormConfig.placeholder[input.name]}</InputLabel>
+                        <FormControl className={this.classes.select}>
+                          <InputLabel className={this.classes.selectLabel} htmlFor="tag-select">{FormConfig.placeholder[input.name]}</InputLabel>
                           <Select
+                            className={this.classes.select}
                             inputProps={{
                               id: 'tag-select',
                             }}
@@ -208,7 +214,7 @@ class ShareForm extends Component {
                           >
                             {tags &&
                               tags.map(tag => (
-                                <MenuItem key={tag.id} value={tag.id}>
+                                <MenuItem  key={tag.id} value={tag.id}>
                                   <Checkbox
                                     checked={
                                       this.state.selectedTags.indexOf(
@@ -224,7 +230,7 @@ class ShareForm extends Component {
                         );
                       }}
                     </Field>
-                  <Button type="submit" size="small" color="primary">
+                  <Button type="submit" className={this.classes.sharebtn}>
                     Share
                   </Button>
                 </form>
