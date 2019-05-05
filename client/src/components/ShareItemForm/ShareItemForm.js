@@ -7,7 +7,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Select from '@material-ui/core/Select';
 import Checkbox from '@material-ui/core/Checkbox';
-
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
 import { updateItem, resetItem, resetImage } from '../../redux/ShareItemPreview/reducer';
 import { connect } from 'react-redux';
 
@@ -38,6 +39,7 @@ const FormConfig = {
   placeholder: {
     title: 'Name your item',
     description: 'Describe your item',
+    tags:'Add some tags'
   }
 };
 
@@ -185,31 +187,37 @@ class ShareForm extends Component {
                   <Field name="tags">
                     {({ input, meta }) => {
                       return (
-                        <Select
-                          multiple
-                          value={this.state.selectedTags}
-                          onChange={e => this.handleSelectTag(e)}
-                          renderValue={selected => {
-                            return this.generateTagsText(tags, selected);
-                          }}
-                        >
-                          {tags &&
-                            tags.map(tag => (
-                              <MenuItem key={tag.id} value={tag.id}>
-                                <Checkbox
-                                  checked={
-                                    this.state.selectedTags.indexOf(
-                                      tag.id,
-                                    ) > -1
-                                  }
-                                />
-                                <ListItemText primary={tag.title} />
-                              </MenuItem>
-                            ))}
-                        </Select>
-                      );
-                    }}
-                  </Field>
+                        <FormControl>
+                          <InputLabel htmlFor="tag-select">{FormConfig.placeholder[input.name]}</InputLabel>
+                          <Select
+                            inputProps={{
+                              id: 'tag-select',
+                            }}
+                            multiple
+                            value={this.state.selectedTags}
+                            onChange={e => this.handleSelectTag(e)}
+                            renderValue={selected => {
+                              return this.generateTagsText(tags, selected);
+                            }}
+                          >
+                            {tags &&
+                              tags.map(tag => (
+                                <MenuItem key={tag.id} value={tag.id}>
+                                  <Checkbox
+                                    checked={
+                                      this.state.selectedTags.indexOf(
+                                        tag.id,
+                                      ) > -1
+                                    }
+                                  />
+                                  <ListItemText primary={tag.title} />
+                                </MenuItem>
+                              ))}
+                            </Select>
+                          </FormControl>
+                        );
+                      }}
+                    </Field>
                   <Button type="submit" size="small" color="primary">
                     Share
                   </Button>
