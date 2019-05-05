@@ -9,9 +9,10 @@ import IconButton from '@material-ui/core/IconButton';
 import AddIcon from '@material-ui/icons/Add';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import logo from '../../images/boomtown.svg';
+import { NavLink } from 'react-router-dom';
 
-function MenuBar(props) {
-  const { classes } = props;
+const MenuBar = ({ classes, match }) => {
+    console.log(match);
   return (
       <AppBar position="fixed" color="primary" className={classes.appBar}>
         <Toolbar className={classes.toolbar}>
@@ -20,7 +21,9 @@ function MenuBar(props) {
             </IconButton>
           <div>
             <IconButton color="inherit">
-              <AddIcon  />
+                <NavLink to='/share'>
+                    <AddIcon />
+                </NavLink>
             </IconButton>
             <IconButton color="inherit">
               <MoreIcon />

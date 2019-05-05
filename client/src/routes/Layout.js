@@ -15,7 +15,7 @@ export default () => (
         if(viewer){
           return(
             <div>
-            <MenuBar/>
+            <Route path="/*" component={MenuBar} />
             <Switch>
               <Route path="/items" component={Items} />
               <Route path="/share" component={Share} />
