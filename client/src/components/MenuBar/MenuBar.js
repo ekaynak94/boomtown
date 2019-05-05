@@ -6,25 +6,29 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
+import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import logo from '../../images/boomtown.svg';
+
 import { NavLink } from 'react-router-dom';
 
 const MenuBar = ({ classes, match }) => {
-    console.log(match);
   return (
       <AppBar position="fixed" color="primary" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
-            <IconButton color="inherit">
-                  <img src={logo} className={classes.logo} alt={'boomtown logo'}/>
+          <Toolbar className={classes.toolbar}>
+          <NavLink to='/*'>
+            <IconButton className={classes.logo} color="inherit">  
             </IconButton>
+          </NavLink>
           <div>
-            <IconButton color="inherit">
-                <NavLink to='/share'>
-                    <AddIcon />
-                </NavLink>
-            </IconButton>
+            {match.url!=='/share'?
+            <NavLink to='/share'>
+                <Button className={classes.addMore} color="inherit">
+                    <AddIcon color='secondary'/>
+                    <Typography >Share Something</Typography>       
+                </Button>
+            </NavLink>:null
+            }       
             <IconButton color="inherit">
               <MoreIcon />
             </IconButton>
