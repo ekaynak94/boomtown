@@ -181,7 +181,7 @@ class ShareForm extends Component {
                   <Field name="title"
                     render={({ input, meta }) => (
                       <Input
-                      className={this.classes}
+                        className={this.classes}
                         placeholder={FormConfig.placeholder[input.name]}
                         onChange={input.onChange}
                         meta={meta}
@@ -209,7 +209,11 @@ class ShareForm extends Component {
                           meta={meta}
                           multiple
                           value={this.state.selectedTags}
-                          onChange={e => this.handleSelectTag(e)}
+                          onChange={e => {
+                            this.handleSelectTag(e);
+                            input.onChange(e);
+                          }}
+                          value={this.state.selectedTags}
                           renderValue={selected => {
                             return this.generateTagsText(tags, selected);
                           }}
