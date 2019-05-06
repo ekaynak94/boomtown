@@ -19,7 +19,20 @@ export default () => (
             <Switch>
               <Route path="/items" component={Items} />
               <Route path="/share" component={Share} />
-              <Route path="/profile/:id" component={Profile} />
+                <Route path="/profile" render={({ match }) => {
+                  return (
+                    <Switch>
+                      <Route
+                        path={`${match.url}/:id`}
+                        render={({ match }) => <Profile userid={match.params.id} />}
+                      />
+                      <Route
+                        path={`${match.url}`}
+                        render={() => <Profile userid={viewer.id} />}
+                      />
+                    </Switch>
+                  );
+              }} />
               <Redirect from="/*" to="/items" />
             </Switch>
             </div>

@@ -8,7 +8,8 @@ import styles from './styles';
 // import {  } from '../../apollo/queries';
 
 class ProfileContainer extends Component {
-    render() {
+  render() {
+    console.log(this.props.userid);
       return (
         <Profile />
       );
