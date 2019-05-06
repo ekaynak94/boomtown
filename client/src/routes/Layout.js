@@ -6,12 +6,13 @@ import Items from '../pages/Items';
 import Profile from '../pages/Profile';
 import Share from '../pages/Share';
 import MenuBar from '../components/MenuBar'
+import FullScreenLoader from '../components/FullScreenLoader'
 
 export default () => (
   <Fragment>
     <ViewerContext.Consumer>
       {({ viewer, loading }) => {
-        if (loading) return <p>Loading...</p>;
+        if (loading) return <FullScreenLoader/>;
         if(viewer){
           return(
             <div>
