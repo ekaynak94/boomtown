@@ -11,21 +11,12 @@ import Button from '@material-ui/core/Button';
 import Gravatar from 'react-gravatar'
 import moment from 'moment';
 
-const ItemCard = ({ classes, item = {
-    imageurl: "http://via.placeholder.com/350x250?text=Please+select+an+image",
-    description: "Describe your item",
-    title: "Name your item",
-    tags: [],
-    itemowner: {
-    },
-    created: ''
-    }
-}) => {
+const ItemCard = ({ classes, item}) => {
     return (
         <Card className={classes.card}>
             <CardMedia
                 className={classes.cardMedia}
-                image={item.imageurl}
+                image={item.imageurl?item.imageurl:"http://via.placeholder.com/350x250?text=Please+select+an+image"}
                 title="Image for item"
             />
             <CardHeader
@@ -37,13 +28,13 @@ const ItemCard = ({ classes, item = {
             />
             <CardContent className={classes.cardContent}>
                 <Typography gutterBottom variant="headline" component="h2">
-                    {item.title}
+                    {item.title&& item.title}
                 </Typography>
                 <Typography gutterBottom variant="subheading" component="h3">
                     {item.tags &&item.tags.map(tag=>tag.title).join(', ')}
                 </Typography>
                 <Typography>
-                    {item.description}
+                    {item.description&& item.description}
                 </Typography>
             </CardContent>
             <CardActions>
