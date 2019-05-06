@@ -2,7 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles';
 
 export default createMuiTheme({
   container: {
-    maxWidth:1000
+    maxWidth:1200
   },
   palette: {
     primary: {
