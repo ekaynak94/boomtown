@@ -87,7 +87,12 @@ npm run test
 
 ### Setup
 
+* Run npm install in the directory.
+* Run npm start in the directory.
+
 ### How to Use
+
+* After running npm start a browser window will be open where you can interact with the app.
 
 ### Usable Commands
 
