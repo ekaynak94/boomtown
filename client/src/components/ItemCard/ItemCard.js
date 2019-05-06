@@ -11,6 +11,8 @@ import Button from '@material-ui/core/Button';
 import Gravatar from 'react-gravatar'
 import moment from 'moment';
 
+import { Link } from 'react-router-dom';
+
 const ItemCard = ({ classes, item}) => {
     return (
         <Card className={classes.card}>
@@ -19,13 +21,15 @@ const ItemCard = ({ classes, item}) => {
                 image={item.imageurl?item.imageurl:"http://via.placeholder.com/350x250?text=Please+select+an+image"}
                 title="Image for item"
             />
-            <CardHeader
-                avatar={
-                    <Gravatar email={item.itemowner.email ? item.itemowner.email : "example@example.com"} className={classes.avatar} />
-                }
-                title={item.itemowner.fullname && item.itemowner.fullname}
-                subheader={moment(item.created).startOf('day').fromNow()}
-            />
+            <Link to={`/profile/${item.itemowner.id}`}>
+                <CardHeader
+                    avatar={
+                        <Gravatar email={item.itemowner.email ? item.itemowner.email : "example@example.com"} className={classes.avatar} />
+                    }
+                    title={item.itemowner.fullname && item.itemowner.fullname}
+                    subheader={moment(item.created).startOf('day').fromNow()}
+                />
+            </Link>
             <CardContent className={classes.cardContent}>
                 <Typography gutterBottom variant="headline" component="h2">
                     {item.title&& item.title}
