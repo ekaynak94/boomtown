@@ -129,7 +129,8 @@ class ShareForm extends Component {
       this.state.selectedTags.indexOf(tag.id)>=0)
       .map(tag => ({ id: tag.id, title: tag.title }))
     const item = { ...values, tags: [...newTags] };
-    addItem({variables:{item}})
+    addItem({ variables: { item } })
+    alert('Item Submitted')
   }
 
   render() {
