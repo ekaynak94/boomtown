@@ -1,5 +1,6 @@
 const styles = theme => ({
     Grid: {
+        padding:'0 100px',
         margin: '0 auto',
         width: '100%',
         maxWidth:theme.container.maxWidth,
