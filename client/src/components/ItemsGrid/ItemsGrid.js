@@ -5,6 +5,7 @@ import ItemCard from '../ItemCard';
 import Grid from '@material-ui/core/Grid';
 
 const ItemsGrid = ({ classes, items }) => {
+    const orderedItems = [...items].sort((a, b) => (b.created - a.created));
     return (
         <Grid
             container
@@ -14,7 +15,7 @@ const ItemsGrid = ({ classes, items }) => {
             justify="center"
             spacing={16}
             >
-                {items.map((item) => {
+                {orderedItems.map((item) => {
                     return (
                         <Grid  className={classes.card} key={item.id} item>
                             <ItemCard item={item}/>
