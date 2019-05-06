@@ -180,8 +180,14 @@ class ShareForm extends Component {
                             className={this.classes.imagebtn}
                             variant="contained"
                             component="span"
+                            onClick={(e) => {
+                              if (this.state.fileSelected) {
+                                e.preventDefault();
+                                this.resetFileInput();
+                              }
+                            }}
                             >
-                              Select an Image
+                              {!this.state.fileSelected?'Select an Image':'Reset Image'}
                             </Button>
                         </label>
                       </div>
