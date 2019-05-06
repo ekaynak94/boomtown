@@ -10,7 +10,7 @@ const styles = theme => ({
     backgroundRepeat:'no-repeat',
     backgroundPosition:'center'
   },
-  addMore: {
+  share: {
     borderRadius: 50,
   }
       
