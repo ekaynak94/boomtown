@@ -131,7 +131,8 @@ class ShareForm extends Component {
       this.state.selectedTags.indexOf(tag.id)>=0)
       .map(tag => ({ id: tag.id, title: tag.title }))
     const item = { ...values, tags: [...newTags] };
-    addItem({ variables: { item } })
+    const success = addItem({ variables: { item } });
+    return success;
   }
 
   render() {
@@ -145,9 +146,11 @@ class ShareForm extends Component {
             </Typography>
             <Form
               onSubmit={(values, form) => {
-                this.saveItem(values, tags, addItem);
+                const res=this.saveItem(values, tags, addItem);
                 form.reset();
                 this.setState({ ...initialState });
+                this.props.resetItem();
+                res?alert('Form Submitted'):alert('could not submit');
               }}
               validate={validate.bind(this)}
               render={({ handleSubmit, pristine, invalid, form }) => (
