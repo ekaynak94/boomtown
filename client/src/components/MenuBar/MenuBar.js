@@ -19,9 +19,7 @@ import { Mutation } from "react-apollo";
 class MenuBar extends React.Component {
     constructor(props) {
         super(props);
-        const { classes, match } = props;
         this.state = {
-            classes,
             anchorEl: null,
         };
     }
@@ -40,21 +38,21 @@ class MenuBar extends React.Component {
     };
   
     render() {
-        const { match } = this.props;
+        const { match,classes } = this.props;
         const { anchorEl } = this.state;
         return (
             <Mutation mutation={LOGOUT_MUTATION}>
                 {(logout) => (
-                    <AppBar position="fixed" color="primary" className={this.state.classes.appBar}>
-                        <Toolbar className={this.state.classes.toolbar}>
+                    <AppBar position="fixed" color="primary" className={classes.appBar}>
+                        <Toolbar className={classes.toolbar}>
                             <NavLink to='/*'>
-                                <IconButton className={this.state.classes.logo} color="inherit">
+                                <IconButton className={classes.logo} color="inherit">
                                 </IconButton>
                             </NavLink>
                             <div>
                                 {match.url !== '/share' ?
                                     <NavLink to='/share'>
-                                        <Button className={this.state.classes.addMore} color="inherit">
+                                        <Button className={classes.share} color="inherit">
                                             <AddIcon color='secondary' />
                                             <Typography >Share Something</Typography>
                                         </Button>
