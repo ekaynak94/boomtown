@@ -34,10 +34,10 @@ const ItemCard = ({ classes, item}) => {
                 <Typography gutterBottom variant="headline" component="h2">
                     {item.title&& item.title}
                 </Typography>
-                <Typography gutterBottom variant="subheading" component="h3">
+                <Typography >
                     {item.tags &&item.tags.map(tag=>tag.title).join(', ')}
                 </Typography>
-                <Typography>
+                <Typography gutterBottom variant="subheading" component="h3">
                     {item.description&& item.description}
                 </Typography>
             </CardContent>
