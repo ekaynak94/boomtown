@@ -47,17 +47,18 @@ const FormConfig = {
     tags:'Add some tags'
   }
 };
+const initialState = {
+  fileSelected: false,
+  done: false,
+  selectedTags: [],
+};
 
 class ShareForm extends Component {
   constructor(props) {
     super(props);
     this.fileInput = React.createRef();
     this.classes = props.classes;
-    this.state = {
-      fileSelected: false,
-      done: false,
-      selectedTags: [],
-    };
+    this.state = {...initialState};
   }
 
   handleSelectTag=(event)=> {
@@ -124,7 +125,7 @@ class ShareForm extends Component {
     });
   }
 
-  saveItem = (values, tags, addItem) => {
+  saveItem = (values, tags, addItem,form) => {
     const newTags = tags
       .filter(tag =>
       this.state.selectedTags.indexOf(tag.id)>=0)
@@ -143,9 +144,13 @@ class ShareForm extends Component {
               Share. Borrow. Prosper.
             </Typography>
             <Form
-              onSubmit={(values) => this.saveItem(values, tags, addItem)}
+              onSubmit={(values, form) => {
+                this.saveItem(values, tags, addItem);
+                form.reset();
+                this.setState({ ...initialState });
+              }}
               validate={validate.bind(this)}
-              render={({ handleSubmit, pristine, invalid, form})=> (
+              render={({ handleSubmit, pristine, invalid, form }) => (
                 <form onSubmit={handleSubmit}>
                   <FormSpy
                     subscription={{ values: true }}
