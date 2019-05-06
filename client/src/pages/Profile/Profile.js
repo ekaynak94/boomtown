@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 
 const Profile = ({ classes, user }) => {
   return (
-    <div>
+    <div className={classes.root}>
       <UserCard user={user} />
       <Typography color="primary" variant="headline" component="h1">
         Shared Items
