@@ -1,7 +1,7 @@
 const styles = theme => ({
     background: {
-        height: '100%',
-        width: '100%',
+        minHeight: '100vh',
+        width: '100vw',
         backgroundColor: theme.palette.secondary.main,
         paddingTop:100
     },
