@@ -14,6 +14,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import { updateItem, resetItem, resetImage } from '../../redux/ShareItemPreview/reducer';
 import { connect } from 'react-redux';
+import validate from './helpers/validation';
 
 import { Mutation } from "react-apollo";
 import { ADD_ITEM_MUTATION} from '../../apollo/queries';
@@ -130,7 +131,6 @@ class ShareForm extends Component {
       .map(tag => ({ id: tag.id, title: tag.title }))
     const item = { ...values, tags: [...newTags] };
     addItem({ variables: { item } })
-    alert('Item Submitted')
   }
 
   render() {
@@ -144,6 +144,7 @@ class ShareForm extends Component {
             </Typography>
             <Form
               onSubmit={(values) => this.saveItem(values, tags, addItem)}
+              validate={validate.bind(this)}
               render={({ handleSubmit, pristine, invalid, form})=> (
                 <form onSubmit={handleSubmit}>
                   <FormSpy
@@ -196,42 +197,42 @@ class ShareForm extends Component {
                         meta={meta}
                         value={input.value} />
                     )} />
-                  <Field name="tags">
-                    {({ input, meta }) => {
-                      return (
-                        <FormControl className={this.classes.select}>
-                          <InputLabel className={this.classes.selectLabel} htmlFor="tag-select">{FormConfig.placeholder[input.name]}</InputLabel>
-                          <Select
-                            className={this.classes.select}
-                            inputProps={{
-                              id: 'tag-select',
-                            }}
-                            multiple
-                            value={this.state.selectedTags}
-                            onChange={e => this.handleSelectTag(e)}
-                            renderValue={selected => {
-                              return this.generateTagsText(tags, selected);
-                            }}
-                          >
-                            {tags &&
-                              tags.map(tag => (
-                                <MenuItem  key={tag.id} value={tag.id}>
-                                  <Checkbox
-                                    checked={
-                                      this.state.selectedTags.indexOf(
-                                        tag.id,
-                                      ) > -1
-                                    }
-                                  />
-                                  <ListItemText primary={tag.title} />
-                                </MenuItem>
-                              ))}
-                            </Select>
-                          </FormControl>
-                        );
-                      }}
-                    </Field>
-                  <Button type="submit" className={this.classes.sharebtn}>
+                  <Field name="tags" render={({ input, meta }) => {
+                    return (
+                      <FormControl className={this.classes.select}>
+                        <InputLabel className={this.classes.selectLabel} htmlFor="tag-select">{FormConfig.placeholder[input.name]}</InputLabel>
+                        <Select
+                          className={this.classes.select}
+                          inputProps={{
+                            id: 'tag-select',
+                          }}
+                          meta={meta}
+                          multiple
+                          value={this.state.selectedTags}
+                          onChange={e => this.handleSelectTag(e)}
+                          renderValue={selected => {
+                            return this.generateTagsText(tags, selected);
+                          }}
+                        >
+                          {tags &&
+                            tags.map(tag => (
+                              <MenuItem  key={tag.id} value={tag.id}>
+                                <Checkbox
+                                  checked={
+                                    this.state.selectedTags.indexOf(
+                                      tag.id,
+                                    ) > -1
+                                  }
+                                />
+                                <ListItemText primary={tag.title} />
+                              </MenuItem>
+                            ))}
+                          </Select>
+                        </FormControl>
+                      );
+                    }}
+                  />
+                  <Button  disabled={pristine || invalid} type="submit" className={this.classes.sharebtn}>
                     Share
                   </Button>
                 </form>
