@@ -1,8 +1,8 @@
 import React from 'react';
-
 import ShareItemForm from '../../components/ShareItemForm';
 import ShareItemPreview from '../../components/ShareItemPreview';
 import { ViewerContext } from '../../context/ViewerProvider';
+import PropTypes from 'prop-types';
 
 const Share = ({ classes, tags }) => (
   <ViewerContext.Consumer>
@@ -16,5 +16,10 @@ const Share = ({ classes, tags }) => (
     }}
   </ViewerContext.Consumer>
 );
+
+Share.propTypes = {
+  classes: PropTypes.object.isRequired,
+  tags: PropTypes.array.isRequired
+};
 
 export default Share;

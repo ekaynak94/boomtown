@@ -1,5 +1,6 @@
 import React from 'react';
 import ItemsGrid from '../../components/ItemsGrid';
+import PropTypes from 'prop-types';
 
 const Items = ({ items, classes }) => {
   return (
@@ -7,6 +8,11 @@ const Items = ({ items, classes }) => {
       <ItemsGrid items={items} classes={classes} />
     </div>
   );
+};
+
+Items.propTypes = {
+  classes: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired
 };
 
 export default Items;

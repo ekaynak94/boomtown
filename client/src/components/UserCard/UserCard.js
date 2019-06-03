@@ -6,9 +6,9 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Gravatar from 'react-gravatar';
+import PropTypes from 'prop-types';
 
 const UserCard = ({ classes, user }) => {
-  console.log(user);
   return (
     <Card className={classes.card}>
       <CardHeader
@@ -32,6 +32,11 @@ const UserCard = ({ classes, user }) => {
       </CardContent>
     </Card>
   );
+};
+
+UserCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(UserCard);
