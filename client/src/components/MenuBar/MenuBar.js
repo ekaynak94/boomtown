@@ -8,10 +8,12 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import PowerSettingsNew from '@material-ui/icons/PowerSettingsNew';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LOGOUT_MUTATION } from '../../apollo/queries';
 import { Mutation } from 'react-apollo';
 
@@ -44,17 +46,17 @@ class MenuBar extends React.Component {
         {logout => (
           <AppBar position="fixed" color="primary" className={classes.appBar}>
             <Toolbar className={classes.toolbar}>
-              <NavLink to="/*">
+              <Link to="/*">
                 <IconButton className={classes.logo} color="inherit" />
-              </NavLink>
+              </Link>
               <div>
                 {match.url !== '/share' ? (
-                  <NavLink to="/share">
+                  <Link to="/share">
                     <Button className={classes.share} color="inherit">
                       <AddIcon color="secondary" />
                       <Typography>Share Something</Typography>
                     </Button>
-                  </NavLink>
+                  </Link>
                 ) : null}
                 <IconButton
                   aria-owns={anchorEl ? 'nav-menu' : undefined}
@@ -71,10 +73,20 @@ class MenuBar extends React.Component {
                   onClose={this.handleClose}
                 >
                   <MenuItem onClick={this.handleClose}>
-                    <NavLink to="/profile">Your Profile</NavLink>
+                    <Link className={classes.link} to="/profile">
+                      <AccountCircle
+                        className={classes.icon}
+                        color="secondary"
+                      />Your Profile
+                    </Link>
                   </MenuItem>
                   <MenuItem onClick={() => this.logOut(logout)}>
-                    <NavLink to="/*">Sign-Out</NavLink>
+                    <Link className={classes.link} to="/*">
+                      <PowerSettingsNew
+                        className={classes.icon}
+                        color="secondary"
+                      />Sign-Out
+                    </Link>
                   </MenuItem>
                 </Menu>
               </div>

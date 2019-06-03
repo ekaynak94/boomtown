@@ -12,6 +12,14 @@ const styles = theme => ({
   },
   share: {
     borderRadius: 50
+  },
+  link: {
+    color: theme.palette.secondary.main,
+    display: 'flex',
+    alignItems: 'center'
+  },
+  icon: {
+    marginRight: '0.75em'
   }
 });
 
