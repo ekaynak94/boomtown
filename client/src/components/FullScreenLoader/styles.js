@@ -1,4 +1,3 @@
-import logo from '../../images/boomtown.svg';
 const styles = theme => ({
   root: {
     position: 'absolute',
