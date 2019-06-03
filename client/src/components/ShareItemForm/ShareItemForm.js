@@ -256,7 +256,6 @@ class ShareForm extends Component {
                               this.handleSelectTag(e);
                               input.onChange(e);
                             }}
-                            value={this.state.selectedTags}
                             renderValue={selected => {
                               return this.generateTagsText(tags, selected);
                             }}
