@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 const Items = ({ items, classes }) => {
   return (
     <div className={classes.background}>
-      <ItemsGrid items={items} classes={classes} />
+      <ItemsGrid items={items} />
     </div>
   );
 };

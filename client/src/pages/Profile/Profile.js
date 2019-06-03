@@ -12,7 +12,7 @@ const Profile = ({ classes, user }) => {
         <Typography color="primary" variant="headline" component="h1">
           Shared Items
         </Typography>
-        <ItemsGrid items={user.items} classes={classes} />
+        <ItemsGrid items={user.items} />
       </div>
     </div>
   );
