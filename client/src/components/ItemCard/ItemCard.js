@@ -44,13 +44,13 @@ const ItemCard = ({ classes, item }) => {
         />
       </Link>
       <CardContent className={classes.cardContent}>
-        <Typography gutterBottom variant="headline" component="h2">
+        <Typography variant="headline" component="h2">
           {item.title && item.title}
         </Typography>
         <Typography>
           {item.tags && item.tags.map(tag => tag.title).join(', ')}
         </Typography>
-        <Typography gutterBottom variant="subheading" component="h3">
+        <Typography noWrap variant="subheading" component="h3">
           {item.description && item.description}
         </Typography>
       </CardContent>
