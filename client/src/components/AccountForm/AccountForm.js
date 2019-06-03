@@ -7,7 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel';
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
 
-import { Form, Field } from 'react-final-form'
+import { Form, Field } from 'react-final-form';
 import {
   LOGIN_MUTATION,
   SIGNUP_MUTATION,
@@ -22,26 +22,23 @@ class AccountForm extends Component {
     super(props);
     this.state = {
       formToggle: true,
-      error:null
+      error: null
     };
   }
 
   render() {
-    const { classes,loginMutation,signupMutation } = this.props;
+    const { classes, loginMutation, signupMutation } = this.props;
     return (
       <Form
         onSubmit={values => {
           const user = { variables: { user: values } };
           this.state.formToggle
-            ? loginMutation(user).catch(error=>this.setState({error}))
-            : signupMutation(user).catch(error=>this.setState({error}));
+            ? loginMutation(user).catch(error => this.setState({ error }))
+            : signupMutation(user).catch(error => this.setState({ error }));
         }}
         validate={validate.bind(this)}
         render={({ handleSubmit, pristine, invalid, submitting, form }) => (
-          <form
-            onSubmit={handleSubmit}
-            className={classes.accountForm}
-          >
+          <form onSubmit={handleSubmit} className={classes.accountForm}>
             {!this.state.formToggle && (
               <FormControl fullWidth className={classes.formControl}>
                 <InputLabel htmlFor="fullname">Username</InputLabel>
@@ -117,7 +114,7 @@ class AccountForm extends Component {
                       form.reset();
                       this.setState({
                         formToggle: !this.state.formToggle,
-                        error:null
+                        error: null
                       });
                     }}
                   >
@@ -145,23 +142,22 @@ class AccountForm extends Component {
 
 const refetchQueries = [
   {
-    query: VIEWER_QUERY,
-  },
+    query: VIEWER_QUERY
+  }
 ];
 
 export default compose(
   graphql(SIGNUP_MUTATION, {
     options: {
-      refetchQueries,
+      refetchQueries
     },
-    name: 'signupMutation',
+    name: 'signupMutation'
   }),
   graphql(LOGIN_MUTATION, {
     options: {
-      refetchQueries,
+      refetchQueries
     },
-    name: 'loginMutation',
+    name: 'loginMutation'
   }),
-  withStyles(styles),
+  withStyles(styles)
 )(AccountForm);
-

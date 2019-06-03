@@ -12,19 +12,14 @@ function setCookie({ tokenName, token, res }) {
 
 function generateToken(user, secret) {
   const { id, email, fullname, bio } = user; // Omit the password from the token
-  return jwt.sign(
-    { id, email, fullname, bio },
-    secret,
-    { expiresIn: '2h' }
-  );
+  return jwt.sign({ id, email, fullname, bio }, secret, { expiresIn: '2h' });
 }
 
-module.exports = (app) => {
+module.exports = app => {
   return {
     async signup(parent, args, context) {
       try {
-
-        const hashedPassword = await bcrypt.hash(args.user.password,10);
+        const hashedPassword = await bcrypt.hash(args.user.password, 10);
 
         const user = await context.pgResource.createUser({
           fullname: args.user.fullname,
@@ -49,15 +44,14 @@ module.exports = (app) => {
     async login(parent, args, context) {
       const { email, password } = args.user;
       try {
-
         const user = await context.pgResource.getUserAndPasswordForVerification(
           args.user.email
         );
-        
-        if(!user) throw 'User was not found.';
 
-        const valid = await bcrypt.compare(password,user.password);
-        
+        if (!user) throw 'User was not found.';
+
+        const valid = await bcrypt.compare(password, user.password);
+
         if (!valid) throw 'Password Invalid';
 
         setCookie({

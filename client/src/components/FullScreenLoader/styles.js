@@ -10,12 +10,11 @@ const styles = theme => ({
     flexFlow: 'column',
     flexWrap: 'nowrap',
     justifyContent: 'center',
-    alignItems:'center'
-    
+    alignItems: 'center'
   },
   progress: {
-    margin: theme.spacing.unit * 2,
-  },
+    margin: theme.spacing.unit * 2
+  }
 });
 
 export default styles;

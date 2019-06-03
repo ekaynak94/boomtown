@@ -1,4 +1,3 @@
-
 import React, { Component } from 'react';
 import Profile from './Profile';
 import { withStyles } from '@material-ui/core/styles';
@@ -9,16 +8,17 @@ import { ALL_USER_ITEMS_QUERY } from '../../apollo/queries';
 
 class ProfileContainer extends Component {
   render() {
-      return (
-        <Query query={ALL_USER_ITEMS_QUERY} variables={{ id:this.props.userid }}>
-            {({ loading, error, data }) => {
-                if (loading) return <FullScreenLoader/>;
-                if (error) return <p>{`Error! ${error.message}`}</p>;
-                if(data) return <Profile classes={this.props.classes} user={data.user}/>;
-            }}
-        </Query>
-      );
-    }
+    return (
+      <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: this.props.userid }}>
+        {({ loading, error, data }) => {
+          if (loading) return <FullScreenLoader />;
+          if (error) return <p>{`Error! ${error.message}`}</p>;
+          if (data)
+            return <Profile classes={this.props.classes} user={data.user} />;
+        }}
+      </Query>
+    );
   }
-  
-  export default withStyles(styles)(ProfileContainer);
+}
+
+export default withStyles(styles)(ProfileContainer);

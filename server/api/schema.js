@@ -4,7 +4,7 @@ module.exports = gql`
   scalar Date
 
   directive @auth on OBJECT | FIELD_DEFINITION
-  
+
   type Item @auth {
     id: ID!
     title: String!

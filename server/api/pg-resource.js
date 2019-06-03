@@ -1,10 +1,9 @@
-
-
 module.exports = postgres => {
   return {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
-        text: 'INSERT INTO users (fullname,email,password) VALUES ($1,$2,$3) RETURNING *',
+        text:
+          'INSERT INTO users (fullname,email,password) VALUES ($1,$2,$3) RETURNING *',
         values: [fullname, email, password]
       };
       try {
@@ -23,7 +22,7 @@ module.exports = postgres => {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE email=$1', 
+        text: 'SELECT * FROM users WHERE email=$1',
         values: [email]
       };
       try {
@@ -35,9 +34,8 @@ module.exports = postgres => {
       }
     },
     async getUserById(id) {
-
       const findUserQuery = {
-        text: 'SELECT * FROM users WHERE id=$1', 
+        text: 'SELECT * FROM users WHERE id=$1',
         values: [id]
       };
       try {
@@ -47,10 +45,9 @@ module.exports = postgres => {
       } catch (e) {
         throw 'User was not found.';
       }
-      
     },
     async getItems(idToOmit) {
-      try{
+      try {
         const items = await postgres.query({
           text: `SELECT * FROM items WHERE ownerid != $1`,
           values: idToOmit ? [idToOmit] : []
@@ -61,8 +58,7 @@ module.exports = postgres => {
       }
     },
     async getItemsForUser(id) {
-      try
-      {
+      try {
         const items = await postgres.query({
           text: `SELECT * FROM items WHERE ownerid=$1`,
           values: [id]
@@ -73,7 +69,7 @@ module.exports = postgres => {
       }
     },
     async getBorrowedItemsForUser(id) {
-      try{
+      try {
         const items = await postgres.query({
           text: `SELECT * FROM items WHERE borrowerid=$1;`,
           values: [id]
@@ -84,7 +80,7 @@ module.exports = postgres => {
       }
     },
     async getTags() {
-      try{
+      try {
         const tags = await postgres.query('SELECT * FROM tags');
         return tags.rows;
       } catch (e) {
@@ -92,11 +88,11 @@ module.exports = postgres => {
       }
     },
     async getTagsForItem(id) {
-      try{
+      try {
         const tagsQuery = {
           text: `SELECT * FROM tags INNER JOIN itemtags ON tags.id=itemtags.tagid WHERE itemtags.itemid=$1`, // @TODO: Advanced queries
-        values: [id]
-      };
+          values: [id]
+        };
         const tags = await postgres.query(tagsQuery);
         return tags.rows;
       } catch (e) {
@@ -104,26 +100,26 @@ module.exports = postgres => {
       }
     },
     async saveNewItem({ item, user }) {
-    
       return new Promise((resolve, reject) => {
-       
         postgres.connect((err, client, done) => {
           try {
-            
             client.query('BEGIN', async err => {
               const { title, description, tags } = item;
               const newItemQuery = {
                 text: `INSERT INTO items (title,description,ownerid) VALUES ($1,$2,$3) RETURNING *`,
-                values: [title, description,user]
+                values: [title, description, user]
               };
               const newItem = await client.query(newItemQuery);
-      
-              const itemId = newItem.rows[0].id;
-              const tagsQueryString =tags.map(tag => `(${tag.id},${itemId})`).join(',');
-              
-              await client.query(`INSERT INTO itemtags(tagid, itemid) VALUES ${tagsQueryString}`);
 
-              
+              const itemId = newItem.rows[0].id;
+              const tagsQueryString = tags
+                .map(tag => `(${tag.id},${itemId})`)
+                .join(',');
+
+              await client.query(
+                `INSERT INTO itemtags(tagid, itemid) VALUES ${tagsQueryString}`
+              );
+
               client.query('COMMIT', err => {
                 if (err) {
                   throw err;
@@ -131,7 +127,6 @@ module.exports = postgres => {
                 // release the client back to the pool
                 done();
                 resolve(newItem.rows[0]);
-                
               });
             });
           } catch (e) {

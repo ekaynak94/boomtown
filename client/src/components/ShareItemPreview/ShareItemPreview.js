@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 
 const ShareItemPreview = ({ user, shareItemPreview }) => {
   if (user) {
-    shareItemPreview.itemowner={...user}
+    shareItemPreview.itemowner = { ...user };
   }
   return <ItemCard item={shareItemPreview} />;
-  }
+};
 
-const mapStateToProps=({shareItemPreview})=>({shareItemPreview})
+const mapStateToProps = ({ shareItemPreview }) => ({ shareItemPreview });
 
 export default connect(mapStateToProps)(ShareItemPreview);

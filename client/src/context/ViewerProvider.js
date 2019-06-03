@@ -5,17 +5,16 @@ import { VIEWER_QUERY } from '../apollo/queries';
 export const ViewerContext = React.createContext();
 
 export const ViewerProvider = ({ children }) => {
-
   return (
     <Query query={VIEWER_QUERY}>
-      {({ loading,  data }) => {
+      {({ loading, data }) => {
         const viewer = data && data.viewer ? data.viewer : null;
         return (
-          <ViewerContext.Provider value={{ viewer,loading }}>
+          <ViewerContext.Provider value={{ viewer, loading }}>
             {children}
           </ViewerContext.Provider>
-          );
+        );
       }}
     </Query>
-    );
+  );
 };
