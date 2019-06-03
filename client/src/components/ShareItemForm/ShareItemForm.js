@@ -23,6 +23,7 @@ import validate from './helpers/validation';
 
 import { Mutation } from 'react-apollo';
 import { ADD_ITEM_MUTATION } from '../../apollo/queries';
+import ShareItemPopUp from '../../components/ShareItemPopUp';
 
 const Input = ({ className, value, placeholder, onChange, meta }) => {
   return (
@@ -55,7 +56,8 @@ const FormConfig = {
 const initialState = {
   fileSelected: false,
   done: false,
-  selectedTags: []
+  selectedTags: [],
+  popUp: null
 };
 
 class ShareForm extends Component {
@@ -144,149 +146,152 @@ class ShareForm extends Component {
     return (
       <Mutation mutation={ADD_ITEM_MUTATION}>
         {addItem => (
-          <div className={this.classes.form}>
-            <Typography
-              variant="headline"
-              component="h1"
-              className={this.classes.headline}
-            >
-              Share. Borrow. Prosper.
-            </Typography>
-            <Form
-              onSubmit={(values, form) => {
-                const res = this.saveItem(values, tags, addItem);
-                form.reset();
-                this.setState({ ...initialState });
-                this.props.resetItem();
-                res ? alert('Form Submitted') : alert('could not submit');
-              }}
-              validate={validate.bind(this)}
-              render={({ handleSubmit, pristine, invalid, form }) => (
-                <form onSubmit={handleSubmit}>
-                  <FormSpy
-                    subscription={{ values: true }}
-                    component={({ values }) => {
-                      if (values) {
-                        this.dispatchUpdate(
-                          values,
-                          tags,
-                          this.props.updateItem
-                        );
-                      }
-                      return '';
-                    }}
-                  />
-                  <Field
-                    name="imageurl"
-                    render={({ input, meta }) => (
-                      <div>
-                        <input
-                          hidden
-                          ref={this.fileInput}
-                          accept="image/*"
-                          id="contained-button-file"
-                          onChange={e => this.handleSelectFile(e)}
-                          type="file"
+          <div>
+            {this.state.popUp && <ShareItemPopUp />}
+            <div className={this.classes.form}>
+              <Typography
+                variant="headline"
+                component="h1"
+                className={this.classes.headline}
+              >
+                Share. Borrow. Prosper.
+              </Typography>
+              <Form
+                onSubmit={(values, form) => {
+                  const res = this.saveItem(values, tags, addItem);
+                  form.reset();
+                  this.setState({ ...initialState, popUp: res ? true : false });
+                  this.props.resetItem();
+                }}
+                validate={validate.bind(this)}
+                render={({ handleSubmit, pristine, invalid, form }) => (
+                  <form onSubmit={handleSubmit}>
+                    <FormSpy
+                      subscription={{ values: true }}
+                      component={({ values }) => {
+                        if (values) {
+                          this.dispatchUpdate(
+                            values,
+                            tags,
+                            this.props.updateItem
+                          );
+                        }
+                        return '';
+                      }}
+                    />
+                    <Field
+                      name="imageurl"
+                      render={({ input, meta }) => (
+                        <div>
+                          <input
+                            hidden
+                            ref={this.fileInput}
+                            accept="image/*"
+                            id="contained-button-file"
+                            onChange={e => this.handleSelectFile(e)}
+                            type="file"
+                          />
+                          <label htmlFor="contained-button-file">
+                            <Button
+                              className={this.classes.imagebtn}
+                              variant="contained"
+                              component="span"
+                              onClick={e => {
+                                if (this.state.fileSelected) {
+                                  e.preventDefault();
+                                  this.resetFileInput();
+                                }
+                              }}
+                            >
+                              {!this.state.fileSelected
+                                ? 'Select an Image'
+                                : 'Reset Image'}
+                            </Button>
+                          </label>
+                        </div>
+                      )}
+                    />
+                    <Field
+                      name="title"
+                      render={({ input, meta }) => (
+                        <Input
+                          className={this.classes}
+                          placeholder={FormConfig.placeholder[input.name]}
+                          onChange={input.onChange}
+                          meta={meta}
+                          value={input.value}
                         />
-                        <label htmlFor="contained-button-file">
-                          <Button
-                            className={this.classes.imagebtn}
-                            variant="contained"
-                            component="span"
-                            onClick={e => {
-                              if (this.state.fileSelected) {
-                                e.preventDefault();
-                                this.resetFileInput();
-                              }
-                            }}
-                          >
-                            {!this.state.fileSelected
-                              ? 'Select an Image'
-                              : 'Reset Image'}
-                          </Button>
-                        </label>
-                      </div>
-                    )}
-                  />
-                  <Field
-                    name="title"
-                    render={({ input, meta }) => (
-                      <Input
-                        className={this.classes}
-                        placeholder={FormConfig.placeholder[input.name]}
-                        onChange={input.onChange}
-                        meta={meta}
-                        value={input.value}
-                      />
-                    )}
-                  />
+                      )}
+                    />
 
-                  <Field
-                    name="description"
-                    render={({ input, meta }) => (
-                      <Input
-                        className={this.classes}
-                        placeholder={FormConfig.placeholder[input.name]}
-                        onChange={input.onChange}
-                        meta={meta}
-                        value={input.value}
-                      />
-                    )}
-                  />
-                  <Field
-                    name="tags"
-                    render={({ input, meta }) => {
-                      return (
-                        <FormControl className={this.classes.select}>
-                          <InputLabel
-                            className={this.classes.selectLabel}
-                            htmlFor="tag-select"
-                          >
-                            {FormConfig.placeholder[input.name]}
-                          </InputLabel>
-                          <Select
-                            className={this.classes.select}
-                            inputProps={{
-                              id: 'tag-select'
-                            }}
-                            meta={meta}
-                            multiple
-                            value={this.state.selectedTags}
-                            onChange={e => {
-                              this.handleSelectTag(e);
-                              input.onChange(e);
-                            }}
-                            renderValue={selected => {
-                              return this.generateTagsText(tags, selected);
-                            }}
-                          >
-                            {tags &&
-                              tags.map(tag => (
-                                <MenuItem key={tag.id} value={tag.id}>
-                                  <Checkbox
-                                    checked={
-                                      this.state.selectedTags.indexOf(tag.id) >
-                                      -1
-                                    }
-                                  />
-                                  <ListItemText primary={tag.title} />
-                                </MenuItem>
-                              ))}
-                          </Select>
-                        </FormControl>
-                      );
-                    }}
-                  />
-                  <Button
-                    disabled={pristine || invalid}
-                    type="submit"
-                    className={this.classes.sharebtn}
-                  >
-                    Share
-                  </Button>
-                </form>
-              )}
-            />
+                    <Field
+                      name="description"
+                      render={({ input, meta }) => (
+                        <Input
+                          className={this.classes}
+                          placeholder={FormConfig.placeholder[input.name]}
+                          onChange={input.onChange}
+                          meta={meta}
+                          value={input.value}
+                        />
+                      )}
+                    />
+                    <Field
+                      name="tags"
+                      render={({ input, meta }) => {
+                        return (
+                          <FormControl className={this.classes.select}>
+                            <InputLabel
+                              className={this.classes.selectLabel}
+                              htmlFor="tag-select"
+                            >
+                              {FormConfig.placeholder[input.name]}
+                            </InputLabel>
+                            <Select
+                              className={this.classes.select}
+                              inputProps={{
+                                id: 'tag-select'
+                              }}
+                              meta={meta}
+                              multiple
+                              value={this.state.selectedTags}
+                              onChange={e => {
+                                this.handleSelectTag(e);
+                                input.onChange(e);
+                              }}
+                              renderValue={selected => {
+                                return this.generateTagsText(tags, selected);
+                              }}
+                            >
+                              {tags &&
+                                tags.map(tag => (
+                                  <MenuItem key={tag.id} value={tag.id}>
+                                    <Checkbox
+                                      checked={
+                                        this.state.selectedTags.indexOf(
+                                          tag.id
+                                        ) > -1
+                                      }
+                                    />
+                                    <ListItemText primary={tag.title} />
+                                  </MenuItem>
+                                ))}
+                            </Select>
+                          </FormControl>
+                        );
+                      }}
+                    />
+                    <Button
+                      disabled={pristine || invalid}
+                      type="submit"
+                      className={this.classes.sharebtn}
+                    >
+                      Share
+                    </Button>
+                  </form>
+                )}
+              />
+            </div>
           </div>
         )}
       </Mutation>
