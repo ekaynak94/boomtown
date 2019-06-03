@@ -16,16 +16,16 @@ import { Link } from 'react-router-dom';
 const ItemCard = ({ classes, item }) => {
   return (
     <Card className={classes.card}>
-      <CardMedia
-        className={classes.cardMedia}
-        image={
-          item.imageurl
-            ? item.imageurl
-            : 'http://via.placeholder.com/350x250?text=Please+select+an+image'
-        }
-        title="Image for item"
-      />
       <Link to={`/profile/${item.itemowner.id}`}>
+        <CardMedia
+          className={classes.cardMedia}
+          image={
+            item.imageurl
+              ? item.imageurl
+              : 'http://via.placeholder.com/350x250?text=Please+select+an+image'
+          }
+          title="Image for item"
+        />
         <CardHeader
           avatar={
             <Gravatar
