@@ -7,7 +7,11 @@ const styles = theme => ({
   },
   root: {
     maxWidth: theme.container.maxWidth,
+    paddingBottom: '100px',
     margin: '0 auto'
+  },
+  title: {
+    margin: '0.75em auto'
   }
 });
 

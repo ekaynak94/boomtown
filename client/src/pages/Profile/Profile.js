@@ -9,7 +9,12 @@ const Profile = ({ classes, user }) => {
     <div className={classes.background}>
       <div className={classes.root}>
         <UserCard user={user} />
-        <Typography color="primary" variant="headline" component="h1">
+        <Typography
+          className={classes.title}
+          color="primary"
+          variant="headline"
+          component="h1"
+        >
           Shared Items
         </Typography>
         <ItemsGrid items={user.items} />
