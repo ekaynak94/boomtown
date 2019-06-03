@@ -311,7 +311,8 @@ ShareForm.propTypes = {
   classes: PropTypes.object.isRequired,
   tags: PropTypes.array.isRequired,
   updateItem: PropTypes.func.isRequired,
-  resetItem: PropTypes.func.isRequired
+  resetItem: PropTypes.func.isRequired,
+  resetImage: PropTypes.func.isRequired
 };
 
 export default withStyles(styles)(
