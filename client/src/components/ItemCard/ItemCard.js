@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import Gravatar from 'react-gravatar';
 import moment from 'moment';
-
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 const ItemCard = ({ classes, item }) => {
@@ -61,6 +61,11 @@ const ItemCard = ({ classes, item }) => {
       </CardActions>
     </Card>
   );
+};
+
+ItemCard.propTypes = {
+  classes: PropTypes.object.isRequired,
+  item: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(ItemCard);

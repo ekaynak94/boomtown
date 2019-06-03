@@ -6,7 +6,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import React, { Component } from 'react';
 import Typography from '@material-ui/core/Typography';
-
+import PropTypes from 'prop-types';
 import { Form, Field } from 'react-final-form';
 import {
   LOGIN_MUTATION,
@@ -145,6 +145,12 @@ const refetchQueries = [
     query: VIEWER_QUERY
   }
 ];
+
+AccountForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  loginMutation: PropTypes.func.isRequired,
+  signupMutation: PropTypes.func.isRequired
+};
 
 export default compose(
   graphql(SIGNUP_MUTATION, {

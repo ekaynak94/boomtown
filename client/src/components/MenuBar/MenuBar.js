@@ -11,7 +11,6 @@ import AddIcon from '@material-ui/icons/Add';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
 import { NavLink } from 'react-router-dom';
 import { LOGOUT_MUTATION } from '../../apollo/queries';
 import { Mutation } from 'react-apollo';
@@ -88,7 +87,8 @@ class MenuBar extends React.Component {
 }
 
 MenuBar.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired
 };
 
 export default withStyles(styles)(MenuBar);

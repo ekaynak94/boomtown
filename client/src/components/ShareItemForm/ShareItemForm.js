@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Field, FormSpy } from 'react-final-form';
+import PropTypes from 'prop-types';
 import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -305,6 +306,13 @@ const mapDispatchToProps = dispatch => ({
     dispatch(resetImage());
   }
 });
+
+ShareForm.propTypes = {
+  classes: PropTypes.object.isRequired,
+  tags: PropTypes.array.isRequired,
+  updateItem: PropTypes.func.isRequired,
+  resetItem: PropTypes.func.isRequired
+};
 
 export default withStyles(styles)(
   connect(

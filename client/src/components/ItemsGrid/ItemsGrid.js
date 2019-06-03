@@ -3,6 +3,7 @@ import styles from './styles';
 import { withStyles } from '@material-ui/core/styles';
 import ItemCard from '../ItemCard';
 import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
 
 const ItemsGrid = ({ classes, items }) => {
   const orderedItems = [...items].sort((a, b) => b.created - a.created);
@@ -24,5 +25,10 @@ const ItemsGrid = ({ classes, items }) => {
       })}
     </Grid>
   );
+};
+
+ItemsGrid.propTypes = {
+  classes: PropTypes.object.isRequired,
+  items: PropTypes.array.isRequired
 };
 export default withStyles(styles)(ItemsGrid);
