@@ -101,3 +101,9 @@ export const LOGIN_MUTATION = gql`
     }
   }
 `;
+
+export const BORROW_ITEM_MUTATION = gql`
+  mutation borrowItem($id: ID!) {
+    borrowItem(id: $id)
+  }
+`;
