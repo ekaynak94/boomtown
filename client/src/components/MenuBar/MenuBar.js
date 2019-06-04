@@ -34,8 +34,8 @@ class MenuBar extends React.Component {
   };
 
   logOut = logout => {
-    window.location.reload();
     logout();
+    window.location.reload();
   };
 
   render() {
