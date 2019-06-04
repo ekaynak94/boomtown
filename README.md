@@ -18,7 +18,6 @@ A full-stack web application built for online item sharing. Users can sign-up to
 
 ### Setup
 
-Use the db.sql file provided in the root directory for database.
 Run the following commands in the server directory.
 
 #### Installation
@@ -36,6 +35,8 @@ npm run start:dev
 ### How to Use
 
 ![Graphql Playground](./screenshots/screenshot-1.png)
+
+- Use the db.sql file provided in the root directory for database.
 
 - Once the setup is complete, you can enter the url stated in your terminal as 'express running: url' to your browser and access the GraphQL playground.
 
