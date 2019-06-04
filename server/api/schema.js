@@ -73,6 +73,7 @@ module.exports = gql`
 
   type Mutation {
     addItem(item: NewItemInput!): Item @auth
+    borrowItem(id: ID!): Boolean! @auth
     login(user: LoginInput!): User!
     logout: Boolean!
     signup(user: SignupInput!): User!

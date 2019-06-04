@@ -145,6 +145,19 @@ module.exports = postgres => {
           }
         });
       });
+    },
+    async borrowItem({ id, user }) {
+      const borrowItemQuery = {
+        text:
+          'UPDATE items SET borrowerid=$1 WHERE borrowerid IS NULL AND id=$2 RETURNING borrowerid',
+        values: [user, id]
+      };
+      try {
+        const borrower = await postgres.query(borrowItemQuery);
+        return borrower.rows[0];
+      } catch (e) {
+        throw 'Error';
+      }
     }
   };
 };
