@@ -18,6 +18,7 @@ A full-stack web application built for online item sharing. Users can sign-up to
 
 ### Setup
 
+Use the db.sql file provided in the root directory for database.
 Run the following commands in the server directory.
 
 #### Installation
