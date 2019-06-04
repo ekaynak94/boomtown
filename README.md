@@ -1,5 +1,7 @@
 # Boomtown 🏙
 
+![Boomtown](./screenshots/screenshot-2.png)
+
 ## Description
 
 A full-stack web application built for online item sharing. Users can sign-up to share items with other users. They can upload the information for an item that they are willing to share through a form, view the items that the other users have shared and borrow items if they wish to do so.
@@ -40,6 +42,8 @@ npm run start:dev
 
 ## Client
 
+![Share Item form](./screenshots/screenshot-3.png)
+
 ### Technologies Used
 
 - Node.js
@@ -68,9 +72,8 @@ npm start
 
 ### How to Use
 
-![Boomtown](./screenshots/screenshot-2.png)
-
 - Once you run the commands listed above, a browser window will start running the website from your localhost.
+- You can sign-up, and then start navigating through the site.
 
 ## Author
 
