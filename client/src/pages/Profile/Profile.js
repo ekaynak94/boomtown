@@ -9,15 +9,28 @@ const Profile = ({ classes, user }) => {
     <div className={classes.background}>
       <div className={classes.root}>
         <UserCard user={user} />
-        <Typography
-          className={classes.title}
-          color="primary"
-          variant="headline"
-          component="h1"
-        >
-          Shared Items
-        </Typography>
-        <ItemsGrid items={user.items} />
+        {user.items.length > 0 && (
+          <Typography
+            className={classes.title}
+            color="primary"
+            variant="headline"
+            component="h1"
+          >
+            Shared Items
+          </Typography>
+        )}
+        {user.items.length > 0 && <ItemsGrid items={user.items} />}
+        {user.borrowed.length > 0 && (
+          <Typography
+            className={classes.title}
+            color="primary"
+            variant="headline"
+            component="h1"
+          >
+            Borrowed Items
+          </Typography>
+        )}
+        {user.borrowed.length > 0 && <ItemsGrid items={user.borrowed} />}
       </div>
     </div>
   );
