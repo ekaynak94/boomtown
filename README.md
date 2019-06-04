@@ -2,42 +2,21 @@
 
 ## Description
 
-Web based application for local item sharing. Users can upload items that they are willing to loan,and borrow items other users have uploaded.
-
-## Technologies Used
-
-* Node.js
-* React.js
-* Redux
-* Final-Form
-* Material-UI
-* Gravatar
-* Express
-* GraphQL
-* Apollo Client
-* PostgreSQL
-* Postico
+A full-stack web application built for online item sharing. Users can sign-up to share items with other users. They can upload the information for an item that they are willing to share through a form, view the items that the other users have shared and borrow items if they wish to do so.
 
 ## Server
 
+### Technologies Used
+
+- Node.js
+- Express
+- GraphQL
+- PostgreSQL
+- Postico
+
 ### Setup
 
-* Run installation command, 'npm install' in server directory.
-* Activate server by running it on PostgreSQL app.
-* Run the command 'npm run start'.
-
-### How to Use
-
-![Graphql Playground](./screenshots/screenshot-1.png)
-
-* Once the setup is complete, you enter the url stated in your terminal as 'express running: url' to your browser and access the GraphQL playground.
-
-* Here you can enter queries as seen in the screen shot above and see what the database returns with the implemented schema and resolvers.
-
-
-### Usable Commands
-
-Commands must be run from the `server` directory:
+Run the following commands in the server directory.
 
 #### Installation
 
@@ -51,52 +30,29 @@ npm install
 npm run start:dev
 ```
 
-#### Tests
+### How to Use
 
-Just linting:
+![Graphql Playground](./screenshots/screenshot-1.png)
 
-```bash
-npm run lint
-```
+- Once the setup is complete, you can enter the url stated in your terminal as 'express running: url' to your browser and access the GraphQL playground.
 
-Run linting, and fix any errors:
-
-```bash
-npm run lint:fix
-```
-
-Run Jest tests:
-
-```
-npm run jest
-```
-
-Run Jest tests, and watch for changes:
-
-```bash
-npm run jest:watch
-```
-
-Run all tests:
-
-```bash
-npm run test
-```
+- Here you can enter queries as seen in the screen shot above and see what the database returns with the implemented schema and resolvers.
 
 ## Client
 
+### Technologies Used
+
+- Node.js
+- React.js
+- Redux
+- Final-Form
+- Material-UI
+- Gravatar
+- Apollo Client
+
 ### Setup
 
-* Run npm install in the directory.
-* Run npm start in the directory.
-
-### How to Use
-
-* After running npm start a browser window will be open where you can interact with the app.
-
-### Usable Commands
-
-Commands must be run from the `client` directory:
+Run the following commands in the client directory.
 
 #### Installation
 
@@ -110,31 +66,11 @@ npm install
 npm start
 ```
 
-#### Build
+### How to Use
 
-```bash
-npm run build
-```
+![Boomtown](./screenshots/screenshot-2.png)
 
-#### Tests
-
-Just linting:
-
-```bash
-npm run lint
-```
-
-Run linting, and fix any errors:
-
-```bash
-npm run lint:fix
-```
-
-Run all tests:
-
-```bash
-npm run test
-```
+- Once you run the commands listed above, a browser window will start running the website from your localhost.
 
 ## Author
 
