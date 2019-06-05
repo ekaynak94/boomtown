@@ -33,7 +33,12 @@ export default () => (
                         />
                         <Route
                           path={`${match.url}`}
-                          render={() => <Profile userid={viewer.id} />}
+                          render={() => (
+                            <Redirect
+                              from="/*"
+                              to={`${match.url}/${viewer.id}`}
+                            />
+                          )}
                         />
                       </Switch>
                     );
