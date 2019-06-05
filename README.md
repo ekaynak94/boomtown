@@ -2,6 +2,8 @@
 
 ![Boomtown](./screenshots/screenshot-2.png)
 
+![Share Item form](./screenshots/screenshot-3.png)
+
 ## Description
 
 A full-stack web application built for online item sharing. Users can sign-up to share items with other users. They can upload the information for an item that they are willing to share through a form, view the items that the other users have shared and borrow items if they wish to do so.
@@ -43,8 +45,6 @@ npm run start:dev
 - Here you can enter queries as seen in the screen shot above and see what the database returns with the implemented schema and resolvers.
 
 ## Client
-
-![Share Item form](./screenshots/screenshot-3.png)
 
 ### Technologies Used
 
