@@ -19,7 +19,9 @@ const Profile = ({ classes, user }) => {
             Shared Items
           </Typography>
         )}
-        {user.items.length > 0 && <ItemsGrid items={user.items} />}
+        {user.items.length > 0 && (
+          <ItemsGrid items={user.items} showButton={false} />
+        )}
         {user.borrowed.length > 0 && (
           <Typography
             className={classes.title}
@@ -30,7 +32,9 @@ const Profile = ({ classes, user }) => {
             Borrowed Items
           </Typography>
         )}
-        {user.borrowed.length > 0 && <ItemsGrid items={user.borrowed} />}
+        {user.borrowed.length > 0 && (
+          <ItemsGrid items={user.borrowed} showButton={false} />
+        )}
       </div>
     </div>
   );

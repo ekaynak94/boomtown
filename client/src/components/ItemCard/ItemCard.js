@@ -15,7 +15,7 @@ import { Link } from 'react-router-dom';
 import { BORROW_ITEM_MUTATION } from '../../apollo/queries';
 import { Mutation } from 'react-apollo';
 
-const ItemCard = ({ classes, item }) => {
+const ItemCard = ({ classes, item, showButton }) => {
   return (
     <Mutation mutation={BORROW_ITEM_MUTATION}>
       {borrow => (
@@ -59,11 +59,7 @@ const ItemCard = ({ classes, item }) => {
             </Typography>
           </CardContent>
           <CardActions>
-            {item.borrower ? (
-              <Button className={classes.button} size="small">
-                Borrowed
-              </Button>
-            ) : (
+            {showButton && (
               <Button
                 className={classes.button}
                 size="small"
@@ -84,7 +80,8 @@ const ItemCard = ({ classes, item }) => {
 
 ItemCard.propTypes = {
   classes: PropTypes.object.isRequired,
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  showButton: PropTypes.bool.isRequired
 };
 
 export default withStyles(styles)(ItemCard);

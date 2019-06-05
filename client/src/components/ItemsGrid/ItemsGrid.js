@@ -5,7 +5,7 @@ import ItemCard from '../ItemCard';
 import Grid from '@material-ui/core/Grid';
 import PropTypes from 'prop-types';
 
-const ItemsGrid = ({ classes, items }) => {
+const ItemsGrid = ({ classes, items, showButton }) => {
   const orderedItems = [...items].sort((a, b) => b.created - a.created);
   return (
     <Grid
@@ -19,7 +19,7 @@ const ItemsGrid = ({ classes, items }) => {
       {orderedItems.map(item => {
         return (
           <Grid className={classes.card} key={item.id} item>
-            <ItemCard item={item} />
+            <ItemCard item={item} showButton={showButton} />
           </Grid>
         );
       })}
@@ -29,6 +29,7 @@ const ItemsGrid = ({ classes, items }) => {
 
 ItemsGrid.propTypes = {
   classes: PropTypes.object.isRequired,
-  items: PropTypes.array.isRequired
+  items: PropTypes.array.isRequired,
+  showButton: PropTypes.bool.isRequired
 };
 export default withStyles(styles)(ItemsGrid);
